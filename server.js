@@ -17,6 +17,8 @@ app.use('/', (reg,res)=>{
 
 let messages = [];
 
+io.set('origins', '*:*');
+
 io.on('connection', socket =>{
     console.log(socket.id);
 

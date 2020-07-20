@@ -4,39 +4,29 @@ const { Socket } = require('dgram');
 
 const app = express();
 const server = require('http').createServer(app);
-const io = require('socket.io')(server, {
-    handlePreflightRequest: (req, res) => {
-        const headers = {
-            "Access-Control-Allow-Headers": "Content-Type, Authorization",
-            "Access-Control-Allow-Origin": req.headers.origin, //or the specific origin you want to give access to,
-            "Access-Control-Allow-Credentials": true
-        };
-        res.writeHead(200, headers);
-        res.end();
-    }
-});
+const io = require('socket.io')(server);
 
 app.use(express.static(path.join(__dirname, 'public')));
-app.set('views', path.join(__dirname, 'public'));
+app.set('views',path.join(__dirname, 'public'));
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
 
-app.use('/', (reg, res) => {
+app.use('/', (reg,res)=>{
     res.render('index.html');
 });
 
 let messages = [];
 
-io.on('connection', socket => {
+io.on('connection', socket =>{
     console.log(socket.id);
 
     socket.emit('previousMessages', messages);
 
-    socket.on('sendMessage', data => {
+    socket.on('sendMessage', data =>{
         messages.push(data);
-        socket.broadcast.emit('receivedMessage', data);
+        socket.broadcast.emit('receivedMessage',data);
 
     });
 })
 
-server.listen(80);
+//server.listen(3000);

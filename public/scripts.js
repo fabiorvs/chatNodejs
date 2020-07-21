@@ -1,4 +1,4 @@
-var urlChat = 'https://fabiochat.herokuapp.com/';
+var urlChat = 'http://localhost:3000/';
 var socket = io(urlChat);
 
 function renderMessage(message) {

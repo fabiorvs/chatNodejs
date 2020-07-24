@@ -2,7 +2,8 @@ var urlChat = 'http://localhost:3000/';
 var socket = io(urlChat);
 
 function renderMessage(message) {
-    $('.messages').append('<div class="message"><strong>' + message.author + '</strong>:' + message.message + '</div>');
+    $('.messages').append('<div class="message"><strong>' + message.author + '</strong>: ' + message.message + '</div>');
+    $('.messages').scrollTop($('.messages')[0].scrollHeight);
 }
 
 socket.on('previousMessages', function (messages) {
